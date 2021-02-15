@@ -2,7 +2,7 @@
 # docker build . -t baf-build
 # docker run -v $(pwd):/home/blockchain-automation-framework/ baf-build
 
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 
 # Create working directory
 WORKDIR /home/
@@ -18,16 +18,16 @@ RUN apt-get update -y && \
         git \
         libdb-dev libleveldb-dev libsodium-dev zlib1g-dev libtinfo-dev \
         jq \
-        python \
+        python3 \
         python3-dev \
         python3-pip && \
         pip3 install --no-cache --upgrade pip setuptools wheel && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install ansible && \
-    pip3 install jmespath && \
-    pip3 install openshift==0.10.1
+RUN pip3 install ansible
+RUN pip3 install jmespath
+RUN pip3 install openshift
 
 RUN rm /etc/apt/apt.conf.d/docker-clean
 RUN mkdir /etc/ansible/
@@ -49,4 +49,4 @@ ENV PATH=/root/bin:/root/.local/bin/:$PATH
 VOLUME /home/blockchain-automation-framework/
 
 
-CMD ["/home/run.sh"]
+CMD ["/home/reset.sh"]
